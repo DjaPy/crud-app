@@ -1,0 +1,151 @@
+swagger: "2.0"
+info:
+  description: This is the swagger file that goes with our server code
+  version: "1.0.0"
+  title: Swagger ReST Article
+consumes:
+  - application/json
+produces:
+  - application/json
+
+basePath: /api_v1
+
+paths:
+  /users:
+    get:
+      operationId: users.read_all
+      tags:
+        - users
+      summary: Read the entire list of users
+      description: Read the list of users
+      parameters:
+        - name: length
+          in: query
+          type: integer
+          description: Number of users to get from users
+          required: false
+        - name: offset
+          in: query
+          type: integer
+          description: Offset from beginning of list where to start gathering users
+          required: false
+      responses:
+        200:
+          description: Successfully read users list operation
+          schema:
+            type: array
+            items:
+              properties:
+                fname:
+                  type: string
+                lname:
+                  type: string
+                timestamp:
+                  type: string
+                age:
+                  type: integer
+                job:
+                  type: string
+
+    post:
+      operationId: users.create
+      tags:
+        - users
+      summary: Create a person and add it to the users list
+      description: Create a new person in the users list
+      parameters:
+        - name: person
+          in: body
+          description: Person to create
+          required: True
+          schema:
+            type: object
+            properties:
+              fname:
+                type: string
+                description: First name of person to create
+              lname:
+                type: string
+                description: Last name of person to create
+              age:
+                type: integer
+                description: Age of person to create
+              job:
+                type: string
+                description: Job of person to create
+      responses:
+        201:
+          description: Successfully created person in list
+
+  /users/{lname}:
+    get:
+      operationId: users.read_one
+      tags:
+        - users
+      summary: Read one person from the users list
+      description: Read one person from the users list
+      parameters:
+        - name: lname
+          in: path
+          description: Last name of the person to get from the list
+          type: string
+          required: True
+      responses:
+        200:
+          description: Successfully read person from users list operation
+          schema:
+            properties:
+              fname:
+                type: string
+              lname:
+                type: string
+              timestamp:
+                type: string
+              age:
+                type: integer
+              job:
+                type: string
+
+    put:
+      operationId: users.update
+      tags:
+        - users
+      summary: Update a person in the users list
+      description: Update a person in the users list
+      parameters:
+        - name: lname
+          in: path
+          description: Last name of the person to update in the list
+          type: string
+          required: True
+        - name: person
+          in: body
+          schema:
+            type: object
+            properties:
+              fname:
+                type: string
+              lname:
+                type: string
+              age:
+                type: integer
+              job:
+                type: string
+      responses:
+        200:
+          description: Successfully updated person in users list
+
+    delete:
+      operationId: users.delete
+      tags:
+        - users
+      summary: Delete a person from the users list
+      description: Delete a person
+      parameters:
+        - name: lname
+          in: path
+          type: string
+          required: True
+      responses:
+        200:
+          description: Successfully deleted a person from users list
