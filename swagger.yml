@@ -13,7 +13,7 @@ basePath: /api_v1
 paths:
   /users:
     get:
-      operationId: users.read_all
+      operationId: resource.read_all
       tags:
         - users
       summary: Read the entire list of users
@@ -36,23 +36,31 @@ paths:
             type: array
             items:
               properties:
+                person_id:
+                  type: string
+                  description: Id of the person
                 fname:
                   type: string
+                  description: First name of the person
                 lname:
                   type: string
+                  description: Last name of the person
                 timestamp:
                   type: string
+                  description: Creation/Update timestamp of the person
                 age:
                   type: integer
+                  description: Age of the person
                 job:
                   type: string
+                  description: Job of the person
 
     post:
-      operationId: users.create
+      operationId: resource.create
       tags:
         - users
-      summary: Create a person and add it to the users list
-      description: Create a new person in the users list
+      summary: Create a person
+      description: Create a new person
       parameters:
         - name: person
           in: body
@@ -76,47 +84,77 @@ paths:
       responses:
         201:
           description: Successfully created person in list
+          schema:
+            properties:
+              person_id:
+                type: string
+                description: Id of the person
+              fname:
+                type: string
+                description: First name of person
+              lname:
+                type: string
+                description: Last name of person
+              timestamp:
+                type: string
+                description: Creation/Update timestamp of the person record
+              age:
+                type: integer
+                description: Age of person
+              job:
+                type: string
+                description: Job of person
 
-  /users/{lname}:
+
+  /users/{person_id}:
     get:
-      operationId: users.read_one
+      operationId: resource.read_one
       tags:
         - users
       summary: Read one person from the users list
       description: Read one person from the users list
       parameters:
-        - name: lname
+        - name: person_id
           in: path
-          description: Last name of the person to get from the list
-          type: string
+          description: Id the person to get
+          type: integer
           required: True
       responses:
         200:
           description: Successfully read person from users list operation
           schema:
+            type: object
             properties:
+              person_id:
+                type: string
+                description: Id of the person
               fname:
                 type: string
+                description: First name of the person
               lname:
                 type: string
+                description: Last name of the person
               timestamp:
                 type: string
+                description: Creation/Update timestamp of the person
               age:
                 type: integer
+                description: Age of the person
               job:
                 type: string
+                description: Job of person
 
     put:
-      operationId: users.update
+      operationId: resource.update
       tags:
         - users
       summary: Update a person in the users list
       description: Update a person in the users list
       parameters:
-        - name: lname
+        - name: person_id
           in: path
-          description: Last name of the person to update in the list
-          type: string
+          description: Id the person to update
+          type: integer
           required: True
         - name: person
           in: body
@@ -125,26 +163,51 @@ paths:
             properties:
               fname:
                 type: string
+                description: First name of the person
               lname:
                 type: string
+                description: Last name of the person
               age:
                 type: integer
+                description: Age of the person
               job:
                 type: string
+                description: Job of the person
       responses:
         200:
           description: Successfully updated person in users list
+          schema:
+            properties:
+              person_id:
+                type: string
+                description: Id of the person
+              fname:
+                type: string
+                description: First name of the person
+              lname:
+                type: string
+                description: Last name of the person
+              timestamp:
+                type: string
+                description: Creation/Update timestamp of the person
+              age:
+                type: integer
+                description: Age of the person
+              job:
+                type: string
+                description: Job of person
 
     delete:
-      operationId: users.delete
+      operationId: resource.delete
       tags:
         - users
       summary: Delete a person from the users list
       description: Delete a person
       parameters:
-        - name: lname
+        - name: person_id
           in: path
-          type: string
+          type: integer
+          description: Id of the person to delete
           required: True
       responses:
         200:
