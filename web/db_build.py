@@ -46,8 +46,8 @@ for admin in ADMIN:
     admin_instance = Admin(
         login=admin.get('login'),
         email=admin.get('email'),
-        password=admin.get('password'),
     )
+    admin_instance.set_password(admin.get('password'))
 
     db.session.add(admin_instance)
 
