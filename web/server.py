@@ -14,8 +14,8 @@ connex_app.add_api('swagger.yml')
 application = connex_app.app
 
 
-@application.route('/')
-@application.route('/index')
+@connex_app.route('/')
+@connex_app.route('/index')
 @login_required
 def index():
     if not current_user.is_authenticated:
@@ -23,7 +23,7 @@ def index():
     return render_template('home.html')
 
 
-@application.route('/login', methods=['GET', 'POST'])
+@connex_app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
@@ -41,13 +41,13 @@ def login():
     return render_template('login.html', title='Sign In', form=form)
 
 
-@application.route('/logout')
+@connex_app.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('index'))
 
 
-@application.route('/registration', methods=['GET', 'POST'])
+@connex_app.route('/registration', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
@@ -63,5 +63,5 @@ def register():
 
 
 if __name__ == "__main__":
-    application.run()
+    connex_app.run()
 

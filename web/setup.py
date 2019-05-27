@@ -8,7 +8,7 @@ install_requires = [
     'Flask-Login',
     'flask-marshmallow',
     'marshmallow-sqlalchemy',
-    'marshmallow',
+    'marshmallow==2.19.2',
     'flask-wtf',
     'gunicorn',
 ]

@@ -12,7 +12,7 @@ services:
       - web-data:/usr/src/app/static
     env_file:
       - .env
-    command: /usr/local/bin/gunicorn -w 2 -b :8000 server:application
+    command: /usr/local/bin/gunicorn -w 2 -b :8000 server:connex_app
 
   nginx:
     restart: always

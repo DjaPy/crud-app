@@ -3,7 +3,7 @@ from flask import make_response, abort
 from flask_login import login_required
 
 from config import db
-from models import (Person, PersonSchema)
+from models import Person, PersonSchema
 
 
 def get_timestamp():
@@ -20,6 +20,7 @@ def read_all():
     """
     users = Person.query.order_by(Person.lname).all()
     person_schema = PersonSchema(many=True)
+    print(users)
 
     return person_schema.dump(users).data
 
