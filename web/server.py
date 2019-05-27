@@ -3,21 +3,27 @@ from flask_login import login_user, logout_user, current_user, login_required
 from flask import render_template, flash, redirect, url_for, request
 from werkzeug.urls import url_parse
 
-from config import connex_app, db
+import config
 from forms import LoginForm, RegistrationForm
 from models import Admin
 
+connex_app = config.connex_app
+
 connex_app.add_api('swagger.yml')
 
+application = connex_app.app
 
-@connex_app.route('/')
-@connex_app.route('/index')
+
+@application.route('/')
+@application.route('/index')
 @login_required
 def index():
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
     return render_template('home.html')
 
 
-@connex_app.route('/login', methods=['GET', 'POST'])
+@application.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
@@ -35,13 +41,13 @@ def login():
     return render_template('login.html', title='Sign In', form=form)
 
 
-@connex_app.route('/logout')
+@application.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('index'))
 
 
-@connex_app.route('/registration', methods=['GET', 'POST'])
+@application.route('/registration', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
@@ -49,13 +55,13 @@ def register():
     if form.validate_on_submit():
         user = Admin(login=form.login.data, email=form.email.data)
         user.set_password(form.password.data)
-        db.session.add(user)
-        db.session.commit()
+        config.db.session.add(user)
+        config.db.session.commit()
         flash('Congratulations, you are now a registered user!')
         return redirect(url_for('login'))
     return render_template('registration.html', title='Register', form=form)
 
 
 if __name__ == "__main__":
-    connex_app.run()
+    application.run()
 

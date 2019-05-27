@@ -1,5 +1,5 @@
-FROM python:3.6
+FROM python:3.6-stretch
 
 ADD . .
 
-RUN python setup.py develop
+RUN python setup.py install

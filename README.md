@@ -32,3 +32,10 @@ default login    - admin
 default password - qwerty
 ```
 
+Go to address `0.0.0.0/api_v1/ui` to obtain the swagger schema.
+Then you can create and test queries according to the swagger schema.
+Either via `curl` or on the `localhost/index` page
+
+### Example
+
+`curl -X GET --header 'Accept: text/html' 'http://localhost/api_v1/users'`
