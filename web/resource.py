@@ -20,7 +20,6 @@ def read_all():
     """
     users = Person.query.order_by(Person.lname).all()
     person_schema = PersonSchema(many=True)
-    print(users)
 
     return person_schema.dump(users).data
 
