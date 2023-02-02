@@ -27,5 +27,5 @@ six==1.12.0
 SQLAlchemy==1.3.3
 swagger-ui-bundle==0.0.3
 urllib3==1.26.5
-Werkzeug==0.15.4
+Werkzeug==0.15.5
 WTForms==2.2.1
